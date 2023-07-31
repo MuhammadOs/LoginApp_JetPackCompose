@@ -1,5 +1,6 @@
 package com.example.loginapp_compose
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -157,6 +158,8 @@ fun LogincScreen (navController: NavController){
                 //enabled = password.isNotEmpty() && username.isNotEmpty(),
                 onClick = {
                     clicked = true
+                    /*val intent = Intent(context, SignupActivity::class.java)
+                    context.startActivity(intent)*/
                     when {
                         username.isEmpty() -> {
                             Toast.makeText(

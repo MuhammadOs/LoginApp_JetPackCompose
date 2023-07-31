@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     navigatePage()
+                    //Screen(profiles = getDummyProfiles())
                 }
             }
         }
@@ -32,7 +33,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun navigatePage() {
     val navController = rememberNavController()
-
     NavHost(
         navController = navController,
         startDestination = "login_page",
@@ -47,6 +47,6 @@ fun navigatePage() {
 @Composable
 fun GreetingPreview() {
     BMInternshipTheme() {
-        navigatePage()
+        Screen()
     }
 }
