@@ -1,13 +1,11 @@
 package com.example.loginapp_compose
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,12 +13,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,25 +31,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.loginapp_compose.ui.theme.BMInternshipTheme
+import com.example.loginapp_compose.Components.MyOutlinedTextField
 
 class SignupcompScreen : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
-            Column() {
-
+            Column {
+                SignupScreen(navController = NavController(LocalContext.current))
             }
-
         }
     }
 }
@@ -64,6 +55,9 @@ fun SignupScreen (navController: NavController){
     val context = LocalContext.current
     val showPassword = remember { mutableStateOf(false) }
     var username: String by remember { mutableStateOf("") }
+    var firstname: String by remember { mutableStateOf("") }
+    var lastname: String by remember { mutableStateOf("") }
+    var age: String by remember { mutableStateOf("") }
     var email: String by remember { mutableStateOf("") }
     var password: String by remember { mutableStateOf("") }
     var confirmpass: String by remember { mutableStateOf("") }
@@ -104,7 +98,7 @@ fun SignupScreen (navController: NavController){
             color = Color.DarkGray
         )
         Spacer(modifier = Modifier.height(50.dp))
-        OutlinedTextField(
+        /*OutlinedTextField(
             leadingIcon = {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.baseline_account_circle_24),
@@ -114,9 +108,29 @@ fun SignupScreen (navController: NavController){
             value = username,
             singleLine = true,
             onValueChange = { newValue -> username = newValue })
-
+*/
+        OutlinedTextField(
+            leadingIcon = {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.baseline_account_circle_24),
+                    contentDescription = "")
+            },
+            label = { Text(text = "First Name") },
+            value = firstname,
+            singleLine = true,
+            onValueChange = { newValue -> firstname = newValue })
         Spacer(modifier = Modifier.height(20.dp))
-
+        OutlinedTextField(
+            leadingIcon = {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.baseline_account_circle_24),
+                    contentDescription = "")
+            },
+            label = { Text(text = "Last Name") },
+            value = lastname,
+            singleLine = true,
+            onValueChange = { newValue -> lastname = newValue })
+        Spacer(modifier = Modifier.height(20.dp))
         OutlinedTextField(
             leadingIcon = {
                 Icon(
@@ -127,10 +141,18 @@ fun SignupScreen (navController: NavController){
             value = email,
             singleLine = true,
             onValueChange = { newValue -> email = newValue })
-
         Spacer(modifier = Modifier.height(20.dp))
-
         OutlinedTextField(
+            leadingIcon = {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.baseline_email_24),
+                    contentDescription = "")
+            },
+            label = { Text(text = "Age") },
+            value = age,
+            singleLine = true,
+            onValueChange = { newValue -> age = newValue })
+        /*OutlinedTextField(
             leadingIcon = {
                 androidx.compose.material3.Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.baseline_lock_24),
@@ -152,10 +174,8 @@ fun SignupScreen (navController: NavController){
             visualTransformation = if (showPassword.value) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             onValueChange = { newValue -> password = newValue })
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        OutlinedTextField(
+*/
+        /*OutlinedTextField(
             leadingIcon = {
                 androidx.compose.material3.Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.baseline_lock_24),
@@ -177,14 +197,16 @@ fun SignupScreen (navController: NavController){
             visualTransformation = if (showPassword.value) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             onValueChange = { newValue -> confirmpass = newValue })
-
+*/
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
                 //enabled = password.isNotEmpty() && username.isNotEmpty() && email.isNotEmpty() && confirmpass.isNotEmpty() && password == confirmpass,
                 onClick = {
-                    clicked = true
-                    when {
+                    //clicked = true
+                    //navController.navigate("home_page")
+                    navController.navigate("newProfile_page/$firstname&$lastname&$email&$age")
+                    /*when {
                         username.isEmpty() -> {
                             Toast.makeText(
                                 context,
@@ -228,7 +250,7 @@ fun SignupScreen (navController: NavController){
                                 Toast.LENGTH_LONG
                             ).show()
                         }
-                    }
+                    }*/
                 },
                 shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
@@ -239,17 +261,5 @@ fun SignupScreen (navController: NavController){
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
-        /*if(clicked) {
-            Text("Signed up successfully")
-        }*/
-    }
-}
-
-
-@Preview(showBackground = true, device = Devices.PIXEL_4)
-@Composable
-fun SignupcompScreenPreview() {
-    BMInternshipTheme {
-        com.example.loginapp_compose.SignupScreen(navController = NavController(LocalContext.current))
     }
 }

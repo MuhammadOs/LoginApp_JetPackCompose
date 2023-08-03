@@ -1,6 +1,5 @@
 package com.example.loginapp_compose
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -25,6 +24,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,6 +46,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import com.example.loginapp_compose.ui.theme.BMInternshipTheme
 
 
@@ -60,6 +61,20 @@ class LogincompScreen : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LogincScreen (navController: NavController){
+    /*LaunchedEffect(key1 = "", block = {
+        Toast.makeText(navController.context, "Login Screen Launch", Toast.LENGTH_SHORT).show()
+    })*/
+    //Toast.makeText(navController.context, "Outside side effect", Toast.LENGTH_SHORT).show()
+    /*SideEffect {
+        Toast.makeText(navController.context, "Side effect", Toast.LENGTH_SHORT).show()
+    }*/
+
+    DisposableEffect(key1 = "") {
+        Toast.makeText(navController.context, "Login Screen Launch", Toast.LENGTH_SHORT).show()
+        onDispose {
+            Toast.makeText(navController.context, "Login Screen dispose", Toast.LENGTH_SHORT).show()
+        }
+    }
     val context = LocalContext.current
     val showPassword = remember { mutableStateOf(false) }
     var username: String by remember { mutableStateOf("") }
@@ -178,9 +193,10 @@ fun LogincScreen (navController: NavController){
                         else -> {
                             Toast.makeText(
                                 context,
-                                "Logged Successfully!",
+                                "Logged in Successfully!",
                                 Toast.LENGTH_LONG
                             ).show()
+                            navController.navigate("home_page")
                         }
                     }
                 },
@@ -214,6 +230,8 @@ fun LogincScreen (navController: NavController){
 @Composable
 fun LogincompScreenPreview() {
     BMInternshipTheme {
-        com.example.loginapp_compose.LogincScreen(navController = NavController(LocalContext.current))
+        com.example.loginapp_compose.LogincScreen(
+            navController = NavController(LocalContext.current),
+        )
     }
 }
